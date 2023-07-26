@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ListOfBooks</string>
+    <string name="title_of_book">Title</string>
+    <string name="ISDN_number">ISDN</string>
+    <string name="author_mame">Author</string>
+    <string name="type_of_book">Type</string>
+    <string name="change_layout_button">Switch</string>
+    <string name="app_toolbar">Toolbar</string>
+    <string name="switch_name">Change the view</string>
+    <string name="show_details">Show Details</string>
+    <string name="grid_name">Grid</string>
+    <string name="linear_name">Linear</string>
+    <string name="retry_button_name">Retry</string>
+    <string name="alert_text_message">No network connection. Please try again!</string>
+    <string name="search_hint">Search</string>
+    <string name="search_bar_button_text">Search</string>
+</resources>
