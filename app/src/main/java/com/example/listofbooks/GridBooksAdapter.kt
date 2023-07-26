@@ -82,7 +82,7 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 Picasso.get().load(book.bookTypeImage).into(holder.imageOfType)
                 holder.binding.bookType.text = book.bookType
                 holder.binding.recycleIcon.setOnClickListener {
-                    deleteItem(position, bookList.size)
+                    deleteItem(position)
                 }
                 holder.binding.Check.setOnCheckedChangeListener { compoundButton, isChecked ->
                     if (compoundButton.isPressed) {
@@ -109,7 +109,7 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 Picasso.get().load(book.bookTypeImage).into(holder.imageOfType)
                 holder.binding.bookType.text = book.bookType
                 holder.binding.recycleIcon.setOnClickListener {
-                    deleteItem(position, bookList.size)
+                    deleteItem(position)
                 }
                 holder.binding.Check.setOnCheckedChangeListener { compoundButton, isChecked ->
                     if (compoundButton.isPressed) {
@@ -136,7 +136,7 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 Picasso.get().load(book.bookTypeImage).into(holder.imageOfType)
                 holder.binding.bookType.text = book.bookType
                 holder.binding.recycleIcon.setOnClickListener {
-                    deleteItem(position, bookList.size)
+                    deleteItem(position)
                 }
                 holder.binding.Check.setOnCheckedChangeListener { compoundButton, isChecked ->
                     if (compoundButton.isPressed) {
@@ -155,7 +155,7 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
         }
     }
 
-    private fun deleteItem(index: Int, listSize: Int) {
+    private fun deleteItem(index: Int) {
         booksListFiltered.removeAt(index)
         bookList.removeAt(index)
         notifyItemRemoved(index)

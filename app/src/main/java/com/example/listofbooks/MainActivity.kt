@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listofbooks.databinding.ActivityMainLinearBinding
 import com.example.listofbooks.model.BooksViewModel
-
 class MainActivity : ComponentActivity() {
 
     private lateinit var binding: ActivityMainLinearBinding
@@ -52,8 +51,8 @@ class MainActivity : ComponentActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (isSwitchSelected) {
-                    gridBookAdapter.filter.filter(s.toString())
-                } else bookAdapter.filter.filter(s.toString())
+                    gridBookAdapter.filter.filter(s.toString().trim())
+                } else bookAdapter.filter.filter(s.toString().trim())
             }
         })
         viewModel = ViewModelProvider(this)[BooksViewModel::class.java]
