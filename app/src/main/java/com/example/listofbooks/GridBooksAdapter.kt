@@ -154,9 +154,11 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
     }
 
     private fun deleteItem(index: Int, listSize: Int) {
+        booksListFiltered.removeAt(index)
         bookList.removeAt(index)
         notifyItemRemoved(index)
-        notifyItemRangeChanged(index, bookList.size)
+        notifyItemRangeChanged(index, booksListFiltered.size)
+        notifyItemChanged(index, bookList.size)
     }
 
     class GridKidsBookViewHolder(val binding: GridKidsBookCardBinding) : ViewHolder(binding.root) {

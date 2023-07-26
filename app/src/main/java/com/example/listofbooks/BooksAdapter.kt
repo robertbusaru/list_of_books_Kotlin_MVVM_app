@@ -158,9 +158,11 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
     }
 
     private fun deleteItem(index: Int, listSize: Int) {
+        booksListFiltered.removeAt(index)
         bookList.removeAt(index)
         notifyItemRemoved(index)
-        notifyItemRangeChanged(index, bookList.size)
+        notifyItemRangeChanged(index, booksListFiltered.size)
+        notifyItemChanged(index, bookList.size)
     }
 
     class KidsBookViewHolder(val binding: LinearKidsBookCardBinding) : ViewHolder(binding.root) {
