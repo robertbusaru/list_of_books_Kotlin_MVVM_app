@@ -91,13 +91,14 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                     }
                 }
                 holder.checkBox.isChecked = book.favorite
-                holder.binding.cardDetails.setOnClickListener{
+                holder.binding.cardDetails.setOnClickListener {
                     val book = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
                     intent.putExtra("BOOK_DETAILS", book)
                     context.startActivity(intent)
                 }
             }
+
             TYPE_KIDS -> {
                 holder as GridKidsBookViewHolder
                 Picasso.get().load(book.bookImage).into(holder.imageOfBook)
@@ -117,13 +118,14 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                     }
                 }
                 holder.checkBox.isChecked = book.favorite
-                holder.binding.cardDetails.setOnClickListener{
+                holder.binding.cardDetails.setOnClickListener {
                     val book = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
                     intent.putExtra("BOOK_DETAILS", book)
                     context.startActivity(intent)
                 }
             }
+
             TYPE_FINANCIAL -> {
                 holder as GridFinancialBookViewHolder
                 Picasso.get().load(book.bookImage).into(holder.imageOfBook)
@@ -143,7 +145,7 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                     }
                 }
                 holder.checkBox.isChecked = book.favorite
-                holder.binding.cardDetails.setOnClickListener{
+                holder.binding.cardDetails.setOnClickListener {
                     val book = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
                     intent.putExtra("BOOK_DETAILS", book)
@@ -204,7 +206,9 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 } else {
                     val resultList = ArrayList<Books>()
                     for (row in bookList) {
-                        if (row.bookName.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        if (row.bookName.toLowerCase()
+                                .contains(constraint.toString().toLowerCase())
+                        ) {
                             resultList.add(row)
                         }
                     }

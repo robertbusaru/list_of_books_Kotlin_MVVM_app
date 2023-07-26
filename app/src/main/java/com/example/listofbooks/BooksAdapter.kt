@@ -207,7 +207,9 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 } else {
                     val resultList = ArrayList<Books>()
                     for (row in bookList) {
-                        if (row.bookName.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        if (row.bookName.toLowerCase()
+                                .contains(constraint.toString().toLowerCase())
+                        ) {
                             resultList.add(row)
                         }
                     }
