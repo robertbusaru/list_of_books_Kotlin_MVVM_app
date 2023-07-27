@@ -11,8 +11,8 @@ class BooksViewModel : ViewModel() {
     val booksListLiveData: MutableLiveData<List<Books>> = MutableLiveData()
     private val repository = NetworkRepository.invoke(RestApiClient.apiClient)
     val isLoadingScreen: MutableLiveData<Boolean> = MutableLiveData()
-
     fun getPost() {
+
         isLoadingScreen.value = true
         viewModelScope.launch {
             when (val response = repository.getBooksData()) {
