@@ -1,6 +1,5 @@
 package com.example.listofbooks.model
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -45,7 +44,4 @@ class BooksViewModel : ViewModel() {
         }
     }
 
-//    fun getBooksLiveData(): MutableLiveData<List<Books>> {
-//        return booksListLiveData
-//    }
 }
