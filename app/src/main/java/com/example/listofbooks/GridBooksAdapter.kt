@@ -1,5 +1,6 @@
 package com.example.listofbooks
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -92,9 +93,9 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 }
                 holder.checkBox.isChecked = book.favorite
                 holder.binding.cardDetails.setOnClickListener {
-                    val book = bookList[position]
+                    val bookSf = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
-                    intent.putExtra("BOOK_DETAILS", book)
+                    intent.putExtra("BOOK_DETAILS", bookSf)
                     context.startActivity(intent)
                 }
             }
@@ -119,9 +120,9 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 }
                 holder.checkBox.isChecked = book.favorite
                 holder.binding.cardDetails.setOnClickListener {
-                    val book = bookList[position]
+                    val bookKids = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
-                    intent.putExtra("BOOK_DETAILS", book)
+                    intent.putExtra("BOOK_DETAILS", bookKids)
                     context.startActivity(intent)
                 }
             }
@@ -146,9 +147,9 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 }
                 holder.checkBox.isChecked = book.favorite
                 holder.binding.cardDetails.setOnClickListener {
-                    val book = bookList[position]
+                    val bookFinancial = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
-                    intent.putExtra("BOOK_DETAILS", book)
+                    intent.putExtra("BOOK_DETAILS", bookFinancial)
                     context.startActivity(intent)
                 }
             }
@@ -188,6 +189,7 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addBooks(books: List<Books>) {
         bookList.clear()
         bookList.addAll(books)
@@ -206,8 +208,8 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 } else {
                     val resultList = ArrayList<Books>()
                     for (row in bookList) {
-                        if (row.bookName.toLowerCase()
-                                .contains(constraint.toString().toLowerCase())
+                        if (row.bookName.lowercase()
+                                .contains(constraint.toString().lowercase())
                         ) {
                             resultList.add(row)
                         }
@@ -219,6 +221,7 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
                 return filterResults
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 booksListFiltered = results?.values as ArrayList<Books>
                 notifyDataSetChanged()
@@ -226,6 +229,7 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setGridLayoutEnabled(enabled: Boolean) {
         var isGridLayoutEnabled = enabled
         notifyDataSetChanged()

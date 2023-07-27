@@ -1,6 +1,5 @@
 package com.example.listofbooks.model
 
-import RestApiClient
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,6 @@ class BooksViewModel : ViewModel() {
     val isLoadingScreen: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getPost() {
-        Log.d("rest_client", "getBooks called in viewModel")
         isLoadingScreen.value = true
         viewModelScope.launch {
             when (val response = repository.getBooksData()) {
@@ -47,7 +45,7 @@ class BooksViewModel : ViewModel() {
         }
     }
 
-    fun getBooksLiveData(): MutableLiveData<List<Books>> {
-        return booksListLiveData
-    }
+//    fun getBooksLiveData(): MutableLiveData<List<Books>> {
+//        return booksListLiveData
+//    }
 }

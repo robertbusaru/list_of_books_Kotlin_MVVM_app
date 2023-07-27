@@ -1,5 +1,6 @@
 package com.example.listofbooks
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -82,7 +83,7 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 Picasso.get().load(book.bookTypeImage).into(holder.imageOfType)
                 holder.binding.bookType.text = book.bookType
                 holder.binding.recycleIcon.setOnClickListener {
-                    deleteItem(position, bookList.size)
+                    deleteItem(position)
                 }
                 holder.binding.Check.setOnCheckedChangeListener { compoundButton, isChecked ->
                     if (compoundButton.isPressed) {
@@ -92,9 +93,9 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 }
                 holder.checkBox.isChecked = book.favorite
                 holder.binding.cardDetails.setOnClickListener {
-                    val book = bookList[position]
+                    val bookSf = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
-                    intent.putExtra("BOOK_DETAILS", book)
+                    intent.putExtra("BOOK_DETAILS", bookSf)
                     context.startActivity(intent)
                 }
             }
@@ -109,7 +110,7 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 Picasso.get().load(book.bookTypeImage).into(holder.imageOfType)
                 holder.binding.bookType.text = book.bookType
                 holder.binding.recycleIcon.setOnClickListener {
-                    deleteItem(position, bookList.size)
+                    deleteItem(position)
                 }
                 holder.binding.Check.setOnCheckedChangeListener { compoundButton, isChecked ->
                     if (compoundButton.isPressed) {
@@ -120,9 +121,9 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 holder.checkBox.isChecked = book.favorite
 
                 holder.binding.cardDetails.setOnClickListener {
-                    val book = bookList[position]
+                    val bookKids = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
-                    intent.putExtra("BOOK_DETAILS", book)
+                    intent.putExtra("BOOK_DETAILS", bookKids)
                     context.startActivity(intent)
                 }
 
@@ -138,7 +139,7 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 Picasso.get().load(book.bookTypeImage).into(holder.imageOfType)
                 holder.binding.bookType.text = book.bookType
                 holder.binding.recycleIcon.setOnClickListener {
-                    deleteItem(position, bookList.size)
+                    deleteItem(position)
                 }
                 holder.binding.Check.setOnCheckedChangeListener { compoundButton, isChecked ->
                     if (compoundButton.isPressed) {
@@ -148,16 +149,16 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 }
                 holder.checkBox.isChecked = book.favorite
                 holder.binding.cardDetails.setOnClickListener {
-                    val book = bookList[position]
+                    val bookFinancial = bookList[position]
                     val intent = Intent(context, BookDetailsActivity::class.java)
-                    intent.putExtra("BOOK_DETAILS", book)
+                    intent.putExtra("BOOK_DETAILS", bookFinancial)
                     context.startActivity(intent)
                 }
             }
         }
     }
 
-    private fun deleteItem(index: Int, listSize: Int) {
+    private fun deleteItem(index: Int) {
         booksListFiltered.removeAt(index)
         bookList.removeAt(index)
         notifyItemRemoved(index)
@@ -189,6 +190,7 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addBooks(books: List<Books>) {
         bookList.clear()
         bookList.addAll(books)
@@ -207,8 +209,8 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 } else {
                     val resultList = ArrayList<Books>()
                     for (row in bookList) {
-                        if (row.bookName.toLowerCase()
-                                .contains(constraint.toString().toLowerCase())
+                        if (row.bookName.lowercase()
+                                .contains(constraint.toString().lowercase())
                         ) {
                             resultList.add(row)
                         }
@@ -220,6 +222,7 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
                 return filterResults
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 booksListFiltered = results?.values as ArrayList<Books>
                 notifyDataSetChanged()

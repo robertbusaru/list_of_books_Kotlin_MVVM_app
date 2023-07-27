@@ -1,3 +1,5 @@
+package com.example.listofbooks.model
+
 import com.example.listofbooks.api.ApiGetService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
