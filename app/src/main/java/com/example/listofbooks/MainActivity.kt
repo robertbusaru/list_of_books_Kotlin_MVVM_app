@@ -11,8 +11,12 @@ import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.example.listofbooks.databinding.ActivityMainLinearBinding
 import com.example.listofbooks.model.BooksViewModel
+import com.example.listofbooks.room.BookRoomDatabase
+import com.example.listofbooks.room.dao.BookDao
+
 class MainActivity : ComponentActivity() {
 
     private lateinit var binding: ActivityMainLinearBinding
@@ -23,7 +27,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var editTextSearch: EditText
     private lateinit var searchButton: Button
-
+    private lateinit var database: BookRoomDatabase
+    private lateinit var bookDao: BookDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +60,17 @@ class MainActivity : ComponentActivity() {
                 } else bookAdapter.filter.filter(s.toString().trim())
             }
         })
+
+
+        database = Room.databaseBuilder(
+            applicationContext,
+            BookRoomDatabase::class.java,
+            "books_database"
+        ).build()
+
+        bookDao = database.bookDao()
+
+
         viewModel = ViewModelProvider(this)[BooksViewModel::class.java]
         viewModel.getPost()
         setupObserver()
@@ -97,6 +113,13 @@ class MainActivity : ComponentActivity() {
             if (!isLoadingScreen) {
                 viewModel.booksListLiveData.observe(this) { booksList ->
                     if (booksList != null) {
+
+//                        GlobalScope.launch {
+//                            withContext(Dispatchers.IO) {
+//                                database.bookDao().insertAll(booksList)
+//                            }
+//                        }
+
                         bookAdapter.addBooks(booksList)
                         gridBookAdapter.addBooks(booksList)
                         binding.retryLayout.root.visibility = View.INVISIBLE
@@ -111,5 +134,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 
 }

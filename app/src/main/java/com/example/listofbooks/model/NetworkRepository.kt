@@ -1,6 +1,6 @@
 package com.example.listofbooks.model
 
-import com.example.listofbooks.Books
+import Books
 import com.example.listofbooks.api.ApiGetService
 import retrofit2.HttpException
 import retrofit2.Response
@@ -8,7 +8,6 @@ import retrofit2.Response
 object NetworkRepository : BooksDataSource {
 
     private lateinit var service: ApiGetService
-    private const val TAG = "NetworkRepository"
 
     operator fun invoke(service: ApiGetService): BooksDataSource {
         NetworkRepository.service = service
