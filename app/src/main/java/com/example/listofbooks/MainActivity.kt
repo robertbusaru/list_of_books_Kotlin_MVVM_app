@@ -1,21 +1,25 @@
 package com.example.listofbooks
 
+import Books
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import com.example.listofbooks.databinding.ActivityMainLinearBinding
 import com.example.listofbooks.model.BooksViewModel
 import com.example.listofbooks.room.BookRoomDatabase
-import com.example.listofbooks.room.dao.BookDao
+import com.example.listofbooks.room.LocalRepository
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -27,13 +31,17 @@ class MainActivity : ComponentActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var editTextSearch: EditText
     private lateinit var searchButton: Button
-    private lateinit var database: BookRoomDatabase
-    private lateinit var bookDao: BookDao
+    private lateinit var booksDB: BookRoomDatabase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainLinearBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        booksDB = BookRoomDatabase.getDatabase(applicationContext)
+        viewModel = ViewModelProvider(this)[BooksViewModel::class.java]
+        viewModel.getPost()
+
         progressBar = binding.progressBar
         editTextSearch = binding.searchLayout.searchBarEditText
         searchButton = binding.searchLayout.searchBarButton
@@ -61,17 +69,12 @@ class MainActivity : ComponentActivity() {
             }
         })
 
+        lifecycleScope.launch {
+            val localRepository = LocalRepository(booksDB.getBookDao())
+            val numberOfBooks = localRepository.getNumberOfBooks()
+            Log.d("Books inserted", "Number of books: $numberOfBooks")
+        }
 
-        database = Room.databaseBuilder(
-            applicationContext,
-            BookRoomDatabase::class.java,
-            "books_database"
-        ).build()
-
-        bookDao = database.bookDao()
-
-
-        viewModel = ViewModelProvider(this)[BooksViewModel::class.java]
         viewModel.getPost()
         setupObserver()
         setupRecyclerView()
@@ -109,31 +112,32 @@ class MainActivity : ComponentActivity() {
             binding.retryLayout.root.visibility = View.INVISIBLE
             binding.retryLayout.retryButton.visibility = View.VISIBLE
 
-
             if (!isLoadingScreen) {
                 viewModel.booksListLiveData.observe(this) { booksList ->
                     if (booksList != null) {
-
-//                        GlobalScope.launch {
-//                            withContext(Dispatchers.IO) {
-//                                database.bookDao().insertAll(booksList)
-//                            }
-//                        }
-
                         bookAdapter.addBooks(booksList)
                         gridBookAdapter.addBooks(booksList)
+                        insertBooksIntoDb(booksList)
+
                         binding.retryLayout.root.visibility = View.INVISIBLE
                         progressBar.visibility = View.GONE
                     } else {
                         progressBar.visibility = View.GONE
                         binding.retryLayout.root.visibility = View.VISIBLE
                         binding.retryLayout.retryButton.visibility = View.VISIBLE
-
                     }
                 }
             }
         }
     }
 
+    private fun insertBooksIntoDb(books: List<Books>){
+        viewModel.viewModelScope.launch {
+            val localRepository = LocalRepository(booksDB.getBookDao())
+            localRepository.insertBooks(books)
+        }
+    }
 
 }
+
+

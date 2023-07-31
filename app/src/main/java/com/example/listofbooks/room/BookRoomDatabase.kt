@@ -9,7 +9,7 @@ import com.example.listofbooks.room.dao.BookDao
 @Database(entities = [BookEntity::class], version = 1, exportSchema = false)
 abstract class BookRoomDatabase : RoomDatabase() {
 
-    abstract fun bookDao(): BookDao
+    abstract fun getBookDao(): BookDao
 
     companion object {
 
@@ -17,11 +17,12 @@ abstract class BookRoomDatabase : RoomDatabase() {
         private var INSTANCE: BookRoomDatabase? = null
 
         fun getDatabase(context: Context): BookRoomDatabase {
+
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     BookRoomDatabase::class.java,
-                    "book_database"
+                    "books_database"
                 ).build()
                 INSTANCE = instance
                 instance

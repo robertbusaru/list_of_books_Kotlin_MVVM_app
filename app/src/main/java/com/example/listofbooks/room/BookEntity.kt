@@ -1,13 +1,11 @@
 package com.example.listofbooks.room
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "books_table")
 data class BookEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "book_details")
     val id: Int = 0,
     val bookImage: String,
     val bookName: String,
