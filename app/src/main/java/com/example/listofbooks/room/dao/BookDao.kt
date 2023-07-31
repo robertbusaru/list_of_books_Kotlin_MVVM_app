@@ -13,5 +13,5 @@ interface BookDao {
     suspend fun insertAll(books: List<BookEntity>)
 
     @Query("SELECT * FROM books_table")
-    fun getAllBooks(): Flow<List<BookEntity>>
+    fun getAllBooks(): List<BookEntity>
 }

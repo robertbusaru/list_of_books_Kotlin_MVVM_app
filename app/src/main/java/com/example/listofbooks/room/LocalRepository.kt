@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 class LocalRepository(private val bookDao: BookDao) {
 
-    val allBooks: Flow<List<BookEntity>> = bookDao.getAllBooks()
+    val allBooks: List<BookEntity> = bookDao.getAllBooks()
 
     suspend fun insertBooks(books: List<BookEntity>) {
         bookDao.insertAll(books)
