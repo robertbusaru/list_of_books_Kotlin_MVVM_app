@@ -194,7 +194,7 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
     @SuppressLint("NotifyDataSetChanged")
     fun addBooks(books: List<Books>) {
         bookList.clear()
-        bookList.addAll(books)
+        bookList.addAll(books as List<Books>)
         booksListFiltered.clear()
         booksListFiltered.addAll(books)
         notifyDataSetChanged()

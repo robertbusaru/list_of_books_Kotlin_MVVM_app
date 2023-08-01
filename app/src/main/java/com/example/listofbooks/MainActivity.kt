@@ -1,6 +1,5 @@
 package com.example.listofbooks
 
-import Books
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,7 +11,6 @@ import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listofbooks.databinding.ActivityMainLinearBinding
@@ -32,6 +30,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var editTextSearch: EditText
     private lateinit var searchButton: Button
     private lateinit var booksDB: BookRoomDatabase
+    private lateinit var repository: Repository
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,7 +116,9 @@ class MainActivity : ComponentActivity() {
                     if (booksList != null) {
                         bookAdapter.addBooks(booksList)
                         gridBookAdapter.addBooks(booksList)
-                        insertBooksIntoDb(booksList)
+//                        insertBooksIntoDb(booksList)
+//                          bookAdapter.addBooks(bookRepo)
+
 
                         binding.retryLayout.root.visibility = View.INVISIBLE
                         progressBar.visibility = View.GONE
@@ -131,12 +132,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun insertBooksIntoDb(books: List<Books>){
-        viewModel.viewModelScope.launch {
-            val localRepository = LocalRepository(booksDB.getBookDao())
-            localRepository.insertBooks(books)
-        }
-    }
+//    private fun insertBooksIntoDb(books: List<Books>) {
+//        viewModel.viewModelScope.launch {
+//            localRepository = LocalRepository(booksDB.getBookDao())
+//            if (localRepository.getNumberOfBooks() != 0) {
+//                localRepository.insertBooks(books)
+//            }
+//        }
+//    }
 
 }
 
