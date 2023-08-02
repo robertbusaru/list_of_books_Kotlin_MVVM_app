@@ -1,6 +1,5 @@
 package com.example.listofbooks.room
 
-import Books
 import com.example.listofbooks.room.dao.BookDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -8,7 +7,7 @@ import kotlinx.coroutines.withContext
 class LocalRepository(private val bookDao: BookDao) {
 
 
-    suspend fun insertBooks(books: List<Books>) {
+    suspend fun insertBooks(books: List<BookEntity>) {
         withContext(Dispatchers.IO) {
             val bookEntities = books.map { book ->
                 BookEntity(

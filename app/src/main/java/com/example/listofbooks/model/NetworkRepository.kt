@@ -5,18 +5,18 @@ import com.example.listofbooks.api.ApiGetService
 import retrofit2.HttpException
 import retrofit2.Response
 
-object NetworkRepository : BooksDataSource {
+object NetworkRepository {
 
     private lateinit var service: ApiGetService
 
-    operator fun invoke(service: ApiGetService): BooksDataSource {
+    operator fun invoke(service: ApiGetService): NetworkRepository {
         NetworkRepository.service = service
         return this
     }
 
-    override suspend fun getBooksData(): ApiResult<List<Books>> {
-        return handleApi { service.getPost() }
-    }
+//    override suspend fun getBooksData(): ApiResult<List<Books>> {
+//        return handleApi { service.getPost() }
+//    }
 
     private suspend fun <T : Any> handleApi(
         execute: suspend () -> Response<T>

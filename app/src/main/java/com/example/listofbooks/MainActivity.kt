@@ -11,10 +11,12 @@ import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listofbooks.databinding.ActivityMainLinearBinding
 import com.example.listofbooks.model.BooksViewModel
+import com.example.listofbooks.room.BookEntity
 import com.example.listofbooks.room.BookRoomDatabase
 import com.example.listofbooks.room.LocalRepository
 import kotlinx.coroutines.launch
@@ -30,7 +32,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var editTextSearch: EditText
     private lateinit var searchButton: Button
     private lateinit var booksDB: BookRoomDatabase
-    private lateinit var repository: Repository
+    private lateinit var netwoorkBooks: Repository
+    private lateinit var localRepository: LocalRepository
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +42,6 @@ class MainActivity : ComponentActivity() {
         setContentView(binding.root)
         booksDB = BookRoomDatabase.getDatabase(applicationContext)
         viewModel = ViewModelProvider(this)[BooksViewModel::class.java]
-        viewModel.getPost()
-
         progressBar = binding.progressBar
         editTextSearch = binding.searchLayout.searchBarEditText
         searchButton = binding.searchLayout.searchBarButton
@@ -79,7 +80,6 @@ class MainActivity : ComponentActivity() {
         setupRecyclerView()
     }
 
-
     private fun setupRecyclerView() {
         bookAdapter = BooksAdapter(this, arrayListOf())
         gridBookAdapter = GridBooksAdapter(this, arrayListOf())
@@ -113,11 +113,14 @@ class MainActivity : ComponentActivity() {
 
             if (!isLoadingScreen) {
                 viewModel.booksListLiveData.observe(this) { booksList ->
+                    Log.d("booklist", "booklist size: ${booksList}")
                     if (booksList != null) {
+
                         bookAdapter.addBooks(booksList)
                         gridBookAdapter.addBooks(booksList)
-//                        insertBooksIntoDb(booksList)
+                        insertBooksIntoDb(booksList)
 //                          bookAdapter.addBooks(bookRepo)
+
 
 
                         binding.retryLayout.root.visibility = View.INVISIBLE
@@ -132,14 +135,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-//    private fun insertBooksIntoDb(books: List<Books>) {
-//        viewModel.viewModelScope.launch {
-//            localRepository = LocalRepository(booksDB.getBookDao())
-//            if (localRepository.getNumberOfBooks() != 0) {
-//                localRepository.insertBooks(books)
-//            }
-//        }
-//    }
+    private fun insertBooksIntoDb(books: List<BookEntity>) {
+        viewModel.viewModelScope.launch {
+            localRepository = LocalRepository(booksDB.getBookDao())
+            if (localRepository.getNumberOfBooks() != 0) {
+                localRepository.insertBooks(books)
+            }
+        }
+    }
 
 }
 

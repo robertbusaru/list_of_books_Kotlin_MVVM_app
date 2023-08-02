@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.listofbooks.databinding.GridFinancialBookCardBinding
 import com.example.listofbooks.databinding.GridKidsBookCardBinding
 import com.example.listofbooks.databinding.GridSfBookCardBinding
+import com.example.listofbooks.room.BookEntity
 import com.squareup.picasso.Picasso
 
 class GridBooksAdapter(private val context: Context, private val bookList: ArrayList<Books>) :
@@ -191,9 +192,9 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addBooks(books: List<Books>) {
+    fun addBooks(books: List<BookEntity>) {
         bookList.clear()
-        bookList.addAll(books)
+        bookList.addAll(books as List<Books>)
         booksListFiltered.clear()
         booksListFiltered.addAll(books)
         notifyDataSetChanged()

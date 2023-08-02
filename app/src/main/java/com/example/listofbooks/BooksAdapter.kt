@@ -4,6 +4,7 @@ import Books
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -13,12 +14,13 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.listofbooks.databinding.LinearFinancialBookCardBinding
 import com.example.listofbooks.databinding.LinearKidsBookCardBinding
 import com.example.listofbooks.databinding.LinearSfBookCardBinding
+import com.example.listofbooks.room.BookEntity
 import com.squareup.picasso.Picasso
 
 class BooksAdapter(private val context: Context, private var bookList: ArrayList<Books>) :
     RecyclerView.Adapter<ViewHolder>(), Filterable {
 
-    var booksListFiltered: ArrayList<Books> = ArrayList()
+    var booksListFiltered: ArrayList<BookEntity> = ArrayList()
 
     companion object {
         private const val TYPE_SF = 0
@@ -192,11 +194,12 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addBooks(books: List<Books>) {
+    fun addBooks(books: List<BookEntity>) {
         bookList.clear()
         bookList.addAll(books as List<Books>)
         booksListFiltered.clear()
         booksListFiltered.addAll(books)
+        Log.d("Testam", "Numarul de carti este: ${books.size}" )
         notifyDataSetChanged()
     }
 
@@ -225,7 +228,7 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
 
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                booksListFiltered = results?.values as ArrayList<Books>
+                booksListFiltered = results?.values as ArrayList<BookEntity>
                 notifyDataSetChanged()
             }
         }
