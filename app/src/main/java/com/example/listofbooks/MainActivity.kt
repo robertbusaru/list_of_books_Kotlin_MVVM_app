@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.listofbooks.databinding.ActivityMainLinearBinding
 import com.example.listofbooks.model.BooksViewModel
-import com.example.listofbooks.room.BookEntity
 import com.example.listofbooks.room.BookRoomDatabase
 import com.example.listofbooks.room.LocalRepository
 import kotlinx.coroutines.launch
@@ -32,7 +31,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var editTextSearch: EditText
     private lateinit var searchButton: Button
     private lateinit var booksDB: BookRoomDatabase
-    private lateinit var netwoorkBooks: Repository
     private lateinit var localRepository: LocalRepository
 
 
@@ -53,10 +51,7 @@ class MainActivity : ComponentActivity() {
 
         editTextSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
+                s: CharSequence?, start: Int, count: Int, after: Int
             ) {
             }
 
@@ -114,18 +109,12 @@ class MainActivity : ComponentActivity() {
             if (!isLoadingScreen) {
                 viewModel.booksListLiveData.observe(this) { booksList ->
                     if (booksList != null) {
-
                         bookAdapter.addBooks(booksList)
                         gridBookAdapter.addBooks(booksList)
                         insertBooksIntoDb(booksList)
-//                          bookAdapter.addBooks(bookRepo)
-
-
-
                         binding.retryLayout.root.visibility = View.INVISIBLE
                         progressBar.visibility = View.GONE
                     } else {
-                        Log.d("localrr", "aici a intrat? da")
                         progressBar.visibility = View.GONE
                         binding.retryLayout.root.visibility = View.VISIBLE
                         binding.retryLayout.retryButton.visibility = View.VISIBLE

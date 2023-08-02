@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.listofbooks.databinding.GridFinancialBookCardBinding
 import com.example.listofbooks.databinding.GridKidsBookCardBinding
 import com.example.listofbooks.databinding.GridSfBookCardBinding
-import com.example.listofbooks.room.BookEntity
 import com.squareup.picasso.Picasso
 
 class GridBooksAdapter(private val context: Context, private val bookList: ArrayList<Books>) :

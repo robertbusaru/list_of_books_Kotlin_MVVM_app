@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.listofbooks.databinding.LinearFinancialBookCardBinding
 import com.example.listofbooks.databinding.LinearKidsBookCardBinding
 import com.example.listofbooks.databinding.LinearSfBookCardBinding
-import com.example.listofbooks.room.BookEntity
 import com.squareup.picasso.Picasso
 
 class BooksAdapter(private val context: Context, private var bookList: ArrayList<Books>) :
