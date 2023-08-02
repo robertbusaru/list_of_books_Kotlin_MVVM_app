@@ -1,6 +1,5 @@
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+package com.example.listofbooks
+
 import java.io.Serializable
 
 data class Books(

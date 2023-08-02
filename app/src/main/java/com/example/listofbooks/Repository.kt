@@ -1,8 +1,6 @@
 package com.example.listofbooks
 
-import Books
 import android.util.Log
-import com.example.listofbooks.model.ApiResult
 import com.example.listofbooks.room.BookEntity
 import com.example.listofbooks.room.LocalDataSource
 
@@ -20,16 +18,19 @@ object Repository {
     }
 
     suspend fun getBooks(): List<Books> {
-        val result = networkDataSource.getBooks()
-        Log.d("getnumberofbooks", "${localDataSource.getNumberOfBooks()}")
-        if (localDataSource.getNumberOfBooks() != 0) {
+
+        Log.d("Network_data_source", "a intrat")
+        if (localDataSource.getNumberOfBooks() == 0) {
+            val result = networkDataSource.getBooks()
             if (result.isSuccessful && result.body() != null) {
+                Log.d("Network_data_source", networkDataSource.getBooks().body().toString())
                 val mappedList = result.body()!!.mapBooksToBookEntity()
+                Log.d("Network_data_source","mapped list count: " + mappedList.size.toString())
                 localDataSource.insertBooks(mappedList)
                 return result.body()!!
             }
         } else {
-            Log.d("Network data source", "${result.toString()}")
+            Log.d("Network_data_source", "ceva`")
             return localDataSource.getBooks().mapBookEntityToBooks()
 
 
@@ -37,8 +38,4 @@ object Repository {
         return arrayListOf()
     }
 
-
-//    suspend fun getNetworkBooks(): ApiResult<List<Books>> {
-//        return networkDataSource.getBooks()
-//    }
 }

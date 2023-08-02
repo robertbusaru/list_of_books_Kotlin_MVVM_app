@@ -1,6 +1,5 @@
 package com.example.listofbooks
 
-import Books
 import com.example.listofbooks.room.BookEntity
 
 fun List<Books>.mapBooksToBookEntity() : List<BookEntity> {

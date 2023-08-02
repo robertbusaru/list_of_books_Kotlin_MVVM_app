@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             val localRepository = LocalRepository(booksDB.getBookDao())
             val numberOfBooks = localRepository.getNumberOfBooks()
-            Log.d("Books inserted", "Number of books: $numberOfBooks")
+            Log.d("main eu", "Number of books: $numberOfBooks")
         }
 
         viewModel.getPost()
@@ -113,7 +113,6 @@ class MainActivity : ComponentActivity() {
 
             if (!isLoadingScreen) {
                 viewModel.booksListLiveData.observe(this) { booksList ->
-                    Log.d("booklist", "booklist size: ${booksList}")
                     if (booksList != null) {
 
                         bookAdapter.addBooks(booksList)
@@ -126,6 +125,7 @@ class MainActivity : ComponentActivity() {
                         binding.retryLayout.root.visibility = View.INVISIBLE
                         progressBar.visibility = View.GONE
                     } else {
+                        Log.d("localrr", "aici a intrat? da")
                         progressBar.visibility = View.GONE
                         binding.retryLayout.root.visibility = View.VISIBLE
                         binding.retryLayout.retryButton.visibility = View.VISIBLE
@@ -135,7 +135,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun insertBooksIntoDb(books: List<BookEntity>) {
+    private fun insertBooksIntoDb(books: List<Books>) {
         viewModel.viewModelScope.launch {
             localRepository = LocalRepository(booksDB.getBookDao())
             if (localRepository.getNumberOfBooks() != 0) {

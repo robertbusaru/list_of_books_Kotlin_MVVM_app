@@ -1,6 +1,5 @@
 package com.example.listofbooks.model
 
-import Books
 import com.example.listofbooks.api.ApiGetService
 import retrofit2.HttpException
 import retrofit2.Response
@@ -14,7 +13,7 @@ object NetworkRepository {
         return this
     }
 
-//    override suspend fun getBooksData(): ApiResult<List<Books>> {
+//    override suspend fun getBooksData(): ApiResult<List<com.example.listofbooks.Books>> {
 //        return handleApi { service.getPost() }
 //    }
 

@@ -1,6 +1,5 @@
 package com.example.listofbooks
 
-import Books
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -192,9 +191,9 @@ class GridBooksAdapter(private val context: Context, private val bookList: Array
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addBooks(books: List<BookEntity>) {
+    fun addBooks(books: List<Books>) {
         bookList.clear()
-        bookList.addAll(books as List<Books>)
+        bookList.addAll(books)
         booksListFiltered.clear()
         booksListFiltered.addAll(books)
         notifyDataSetChanged()

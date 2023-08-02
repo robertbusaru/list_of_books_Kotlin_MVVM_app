@@ -1,6 +1,5 @@
 package com.example.listofbooks
 
-import Books
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -20,7 +19,7 @@ import com.squareup.picasso.Picasso
 class BooksAdapter(private val context: Context, private var bookList: ArrayList<Books>) :
     RecyclerView.Adapter<ViewHolder>(), Filterable {
 
-    var booksListFiltered: ArrayList<BookEntity> = ArrayList()
+    var booksListFiltered: ArrayList<Books> = ArrayList()
 
     companion object {
         private const val TYPE_SF = 0
@@ -194,9 +193,9 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addBooks(books: List<BookEntity>) {
+    fun addBooks(books: List<Books>) {
         bookList.clear()
-        bookList.addAll(books as List<Books>)
+        bookList.addAll(books)
         booksListFiltered.clear()
         booksListFiltered.addAll(books)
         Log.d("Testam", "Numarul de carti este: ${books.size}" )
@@ -228,7 +227,7 @@ class BooksAdapter(private val context: Context, private var bookList: ArrayList
 
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                booksListFiltered = results?.values as ArrayList<BookEntity>
+                booksListFiltered = results?.values  as ArrayList<Books>
                 notifyDataSetChanged()
             }
         }
